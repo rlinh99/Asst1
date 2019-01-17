@@ -5,14 +5,21 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class Server {
     public static void main(String[] args) throws  Exception {
-        //set the name of the object going to be binded to the registry.
         try {
+            //name of the object binding in registry
             String name = "ServerClock";
 
+            //create remote object
             Clock clk = new ClockImpl();
+
+            //cast this object into rmi remote form
             Clock stub = (Clock) UnicastRemoteObject.exportObject(clk, 0);
 
+            //find the localhost registry with port.
+            //change port parameter if the port is blocked
             Registry reg = LocateRegistry.getRegistry(1088);
+
+            //register this object to rmi registry
             reg.rebind(name, stub);
 
             System.out.println("ServerClock object is Registered");
