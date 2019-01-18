@@ -27,14 +27,15 @@ public class Client {
             LocalDateTime time = clk.getTime();
             LocalDateTime endTime = LocalDateTime.now();
 
-            var duration = Duration.between(startTime, endTime);
+            Duration offset = Duration.between(startTime, endTime).dividedBy(2);
 
-            System.out.println(duration);
+            System.out.println(offset);
+            System.out.println(offset);
             System.out.println(time);
 
-            LocalDateTime sysTime = time.plus(duration);
-
-            String timeStr = formatHelper(time);
+            LocalDateTime sysTime = time.plus(offset);
+            System.out.println(sysTime);
+            String timeStr = formatHelper(sysTime);
 
             setTime(timeStr);
 
@@ -45,7 +46,6 @@ public class Client {
     }
 
     private static void setTime(String timeStr) throws IOException {
-
         Runtime rt = Runtime.getRuntime();
         rt.exec(new String[]{"date", "-s", timeStr});
     }
@@ -54,7 +54,6 @@ public class Client {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("DD MMM YYYY HH:mm:ss.SSSS");
         String timeStr = time.format(fmt);
 
-        System.out.println(timeStr);
         return timeStr;
     }
 }
