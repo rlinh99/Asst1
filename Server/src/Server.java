@@ -14,8 +14,9 @@ public class Server {
 
             //cast this object into rmi remote form
             Clock stub = (Clock) UnicastRemoteObject.exportObject(clk, 0);
+
             int port = 1088;
-            //find the localhost registry with port.
+            //start RMI registry.
             //change port parameter if the port is blocked
             Registry reg = LocateRegistry.createRegistry(port);
 
