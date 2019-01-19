@@ -23,26 +23,31 @@ public class Client {
             Clock clk = (Clock) registry.lookup(name);
             System.out.println("Successfully found registry");
 
+            String zoneId = clk.getZoneId();
+
             LocalDateTime startTime = LocalDateTime.now();
-            LocalDateTime time = clk.getTime();
+            LocalDateTime timeObj = clk.getTime();
             LocalDateTime endTime = LocalDateTime.now();
 
             Duration offset = Duration.between(startTime, endTime).dividedBy(2);
 
             System.out.println(offset);
-            System.out.println(offset);
-            System.out.println(time);
-
-            LocalDateTime sysTime = time.plus(offset);
+            LocalDateTime sysTime = timeObj.plus(offset);
             System.out.println(sysTime);
             String timeStr = formatHelper(sysTime);
 
+            setTimeZone(zoneId);
             setTime(timeStr);
 
         } catch (Exception e) {
             System.err.println(" Unhandled Exception:");
             e.printStackTrace();
         }
+    }
+
+    private static void setTimeZone(String zoneId) throws IOException {
+        Runtime rt = Runtime.getRuntime();
+        rt.exec(new String[]{"timedatectl", "set-timezone", zoneId});
     }
 
     private static void setTime(String timeStr) throws IOException {
@@ -52,8 +57,7 @@ public class Client {
 
     private static String formatHelper(LocalDateTime time) {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("DD MMM YYYY HH:mm:ss.SSSS");
-        String timeStr = time.format(fmt);
 
-        return timeStr;
+        return time.format(fmt);
     }
 }

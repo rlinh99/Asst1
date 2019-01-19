@@ -16,6 +16,7 @@ public class Server {
             Clock stub = (Clock) UnicastRemoteObject.exportObject(clk, 0);
 
             int port = 1075;
+
             //start RMI registry.
             //change port parameter if the port is blocked
             Registry reg = LocateRegistry.createRegistry(port);

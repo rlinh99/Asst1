@@ -6,4 +6,5 @@ import java.time.LocalDateTime;
 public interface Clock extends Remote {
     //the method that gets the current time of the system
     LocalDateTime getTime() throws RemoteException;
+    String getZoneId() throws  RemoteException;
 }
