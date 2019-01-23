@@ -1,3 +1,9 @@
+/*
+    CMPT431- Assignment1
+    Author: Sen Lin-301250505
+            Louis Jia Bao Zhuo-301235952
+ */
+
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
