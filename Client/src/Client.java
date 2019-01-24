@@ -5,6 +5,7 @@
 
     *Please run Client file with sudo permission*
 */
+
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.time.Duration;
@@ -18,7 +19,7 @@ public class Client {
             //set the object name of the designated object in the server registry.
             String name = "ServerClock";
             //server ip address
-            String serverIP = "192.168.1.65";
+            String serverIP = "localhost";
 
             //change port parameter if the port is blocked
             int serverPort = 1075;
@@ -44,16 +45,21 @@ public class Client {
             //calculate dsc
             Duration offset = Duration.between(startTime, endTime).dividedBy(2);
 
-//            System.out.println(offset);
             LocalDateTime sysTime = timeObj.plus(offset);
-//            System.out.println(sysTime);
+
+            //formatting linux command line format
             String timeStr = formatHelper(sysTime);
 
             //set timezone and time
             setTimeZone(zoneId);
             setTime(timeStr);
 
+            //print out the result for debugging
             System.out.println("Client system time is synchronized");
+            System.out.println("Time retrieved from server is: " + timeObj.toString() + " in " + zoneId);
+            System.out.println("RTT is: " + offset.multipliedBy(2).toString());
+            System.out.println("Offset is: " + offset.toString());
+            System.out.println("System time is set to: " + sysTime.toString() + "  " + zoneId);
         } catch (Exception e) {
             System.err.println(" Unhandled Exception:");
             e.printStackTrace();
@@ -73,7 +79,7 @@ public class Client {
     }
 
     private static String formatHelper(LocalDateTime time) {
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("DD MMM YYYY HH:mm:ss.SSSS");
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("DD MMM YYYY HH:mm:ss.SSSSSS");
 
         return time.format(fmt);
     }
